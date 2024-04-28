@@ -1,13 +1,5 @@
 console.log("Hello World!");
 
-let humanScore = 0;
-let computerScore = 0;
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
-
 function getComputerChoice() {
 	const choice = Math.floor(Math.random() * 3);
 	switch (choice) {
@@ -34,7 +26,7 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-	if (humanChoice === "cancel") return ;
+	if (humanChoice === "cancel") return -1;
 
 	let gameResult; //0 = lose, 1 = tie, 2 = win
 
@@ -55,12 +47,35 @@ function playRound(humanChoice, computerChoice) {
 	humanCapitalChoice = humanChoice.at(0).toUpperCase() + humanChoice.substring(1); 
 	computerCapitalChoice = computerChoice.at(0).toUpperCase() + computerChoice.substring(1); 
 	if (gameResult === 0) {
-		++computerScore;
 		console.log("You lose! " + computerCapitalChoice + " beats " + humanCapitalChoice);
 	} else if (gameResult === 1) {
 		console.log("You tie! " + computerCapitalChoice + " vs. " + humanCapitalChoice);
 	} else {
-		++humanScore;
 		console.log("You win! " + humanCapitalChoice + " beats " + computerCapitalChoice);
 	}
+	
+	return gameResult;
+}
+
+
+function playGame() {
+	let humanScore = 0;
+	let computerScore = 0;
+
+	for (let i = 0; i < 5; i++) {
+		let humanSelection = getHumanChoice();
+		let computerSelection = getComputerChoice();
+
+		let gameResult = playRound(humanSelection, computerSelection);
+
+		if (gameResult === 0) { //lose
+			++computerScore;
+		} else if (gameResult === 2) { //win
+			++humanScore;
+		} else if (gameResult == -1) {//cancel
+			break;
+		}
+	}
+	
+	console.log("The final score is:\n" + humanScore + " You\n" + computerScore + " Computer\nI hope you enjoyed.");
 }
