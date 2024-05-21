@@ -3,8 +3,40 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Rock Paper Scissors Game</title>
+		<style>
+			body {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			.options {
+			}
+			.result div {
+				color: blue;
+				display: flex;
+				justify-content: flex-start;
+			}
+			.result div:last-of-type  {
+				color: red;
+			}
+			.result div span:first-of-type {
+				width: 100px;
+				text-align: right;
+				padding-right: 10px;
+			}
+			.result div span:last-of-type {
+				text-align: left;
+			}
+		</style>
 	</head>
-	<body>
+	<body> 
+		<div class="options">
+			<button>Rock</button>
+			<button>Paper</button>
+			<button>Scissors</button>
+		</div>
+
+		<div class="result"></div>
 		<script src="script.js"></script>
 	</body>
 </html>

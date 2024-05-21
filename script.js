@@ -44,38 +44,35 @@ function playRound(humanChoice, computerChoice) {
 		if (computerChoice === "scissors") gameResult = 1; 
 	}
 
-	humanCapitalChoice = humanChoice.at(0).toUpperCase() + humanChoice.substring(1); 
-	computerCapitalChoice = computerChoice.at(0).toUpperCase() + computerChoice.substring(1); 
+	let humanCapitalChoice = humanChoice.at(0).toUpperCase() + humanChoice.substring(1); 
+	let computerCapitalChoice = computerChoice.at(0).toUpperCase() + computerChoice.substring(1); 
+	let resultSection = document.querySelector(".result");
+	let resultPara = document.createElement("div");
+	let firstHalf = document.createElement("span");
+	let secondHalf = document.createElement("span");
+
 	if (gameResult === 0) {
-		console.log("You lose! " + computerCapitalChoice + " beats " + humanCapitalChoice);
+		firstHalf.textContent = "You lose! ";
+		secondHalf.textContent = computerCapitalChoice + " beats " + humanCapitalChoice;
 	} else if (gameResult === 1) {
-		console.log("You tie! " + computerCapitalChoice + " vs. " + humanCapitalChoice);
+		firstHalf.textContent = "You tie! ";
+		secondHalf.textContent = computerCapitalChoice + " vs. " + humanCapitalChoice;
 	} else {
-		console.log("You win! " + humanCapitalChoice + " beats " + computerCapitalChoice);
+		firstHalf.textContent = "You win! ";
+		secondHalf.textContent = humanCapitalChoice + " beats " + computerCapitalChoice;
 	}
-	
+
+	resultPara.appendChild(firstHalf);
+	resultPara.appendChild(secondHalf);
+	resultSection.appendChild(resultPara);
+
 	return gameResult;
 }
 
 
-function playGame() {
-	let humanScore = 0;
-	let computerScore = 0;
-
-	for (let i = 0; i < 5; i++) {
-		let humanSelection = getHumanChoice();
-		let computerSelection = getComputerChoice();
-
-		let gameResult = playRound(humanSelection, computerSelection);
-
-		if (gameResult === 0) { //lose
-			++computerScore;
-		} else if (gameResult === 2) { //win
-			++humanScore;
-		} else if (gameResult == -1) {//cancel
-			break;
-		}
-	}
-	
-	console.log("The final score is:\n" + humanScore + " You\n" + computerScore + " Computer\nI hope you enjoyed.");
-}
+let button = document.querySelectorAll("button");
+button.forEach((btn) => {
+	btn.addEventListener("click", (event) => {
+		playRound(btn.textContent.toLowerCase(), getComputerChoice());
+	})
+});
